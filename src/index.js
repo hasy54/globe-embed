@@ -40,8 +40,8 @@ function init() {
 
   // Initialize scene, light
   scene = new Scene();
-  scene.add(new AmbientLight(0xbbbbbb, 0.3));
-  scene.background = new Color(0x040d21);
+  scene.add(new AmbientLight(0x888888, 0.4));
+  scene.background = new Color(0x000000);
 
   // Initialize camera, light
   camera = new PerspectiveCamera();
@@ -52,11 +52,11 @@ function init() {
   dLight.position.set(-800, 2000, 400);
   camera.add(dLight);
 
-  var dLight1 = new DirectionalLight(0x7982f6, 1);
+  var dLight1 = new DirectionalLight(0x666666, 1);
   dLight1.position.set(-200, 500, 200);
   camera.add(dLight1);
 
-  var dLight2 = new PointLight(0x8566cc, 0.5);
+  var dLight2 = new PointLight(0x444444, 0.5);
   dLight2.position.set(-200, 500, 200);
   camera.add(dLight2);
 
@@ -67,7 +67,7 @@ function init() {
   scene.add(camera);
 
   // Additional effects
-  scene.fog = new Fog(0x535ef3, 400, 2000);
+  // scene.fog = new Fog(0x111111, 400, 2000);
 
   // Helpers
   // const axesHelper = new AxesHelper(800);
@@ -82,10 +82,8 @@ function init() {
   controls.enableDamping = true;
   controls.dynamicDampingFactor = 0.01;
   controls.enablePan = false;
-  controls.minDistance = 200;
-  controls.maxDistance = 500;
+  controls.enableZoom = false;
   controls.rotateSpeed = 0.8;
-  controls.zoomSpeed = 1;
   controls.autoRotate = false;
 
   controls.minPolarAngle = Math.PI / 3.5;
@@ -105,24 +103,22 @@ function initGlobe() {
     .hexPolygonsData(countries.features)
     .hexPolygonResolution(3)
     .hexPolygonMargin(0.7)
-    .showAtmosphere(true)
-    .atmosphereColor("#3a228a")
-    .atmosphereAltitude(0.25)
+    .showAtmosphere(false)
     .hexPolygonColor((e) => {
       if (
         ["KGZ", "KOR", "THA", "RUS", "UZB", "IDN", "KAZ", "MYS"].includes(
           e.properties.ISO_A3
         )
       ) {
-        return "rgba(255,255,255, 1)";
-      } else return "rgba(255,255,255, 0.7)";
+        return "rgba(200,200,200, 1)";
+      } else return "rgba(150,150,150, 0.7)";
     });
 
   // NOTE Arc animations are followed after the globe enters the scene
   setTimeout(() => {
     Globe.arcsData(travelHistory.flights)
       .arcColor((e) => {
-        return e.status ? "#9cff00" : "#FF4000";
+        return e.status ? "#cccccc" : "#888888";
       })
       .arcAltitude((e) => {
         return e.arcAlt;
@@ -136,7 +132,7 @@ function initGlobe() {
       .arcsTransitionDuration(1000)
       .arcDashInitialGap((e) => e.order * 1)
       .labelsData(airportHistory.airports)
-      .labelColor(() => "#ffcb21")
+      .labelColor(() => "#aaaaaa")
       .labelDotOrientation((e) => {
         return e.text === "ALA" ? "top" : "right";
       })
@@ -146,7 +142,7 @@ function initGlobe() {
       .labelResolution(6)
       .labelAltitude(0.01)
       .pointsData(airportHistory.airports)
-      .pointColor(() => "#ffffff")
+      .pointColor(() => "#cccccc")
       .pointsMerge(true)
       .pointAltitude(0.07)
       .pointRadius(0.05);
@@ -155,8 +151,8 @@ function initGlobe() {
   Globe.rotateY(-Math.PI * (5 / 9));
   Globe.rotateZ(-Math.PI / 6);
   const globeMaterial = Globe.globeMaterial();
-  globeMaterial.color = new Color(0x3a228a);
-  globeMaterial.emissive = new Color(0x220038);
+  globeMaterial.color = new Color(0x1a1a1a);
+  globeMaterial.emissive = new Color(0x080808);
   globeMaterial.emissiveIntensity = 0.1;
   globeMaterial.shininess = 0.7;
 
@@ -181,11 +177,6 @@ function onWindowResize() {
 }
 
 function animate() {
-  camera.position.x +=
-    Math.abs(mouseX) <= windowHalfX / 2
-      ? (mouseX / 2 - camera.position.x) * 0.005
-      : 0;
-  camera.position.y += (-mouseY / 2 - camera.position.y) * 0.005;
   camera.lookAt(scene.position);
   controls.update();
   renderer.render(scene, camera);
