@@ -23,6 +23,7 @@ let mouseY = 0;
 let windowHalfX = window.innerWidth / 2;
 let windowHalfY = window.innerHeight / 2;
 var Globe;
+var isMobile = window.innerWidth < 768;
 
 init();
 initGlobe();
@@ -60,9 +61,15 @@ function init() {
   dLight2.position.set(-200, 500, 200);
   camera.add(dLight2);
 
-  camera.position.z = 220;
-  camera.position.x = -120;
-  camera.position.y = 80;
+  if (isMobile) {
+    camera.position.z = 300;
+    camera.position.x = 0;
+    camera.position.y = 0;
+  } else {
+    camera.position.z = 220;
+    camera.position.x = -120;
+    camera.position.y = 80;
+  }
 
   scene.add(camera);
 
@@ -83,6 +90,7 @@ function init() {
   controls.dynamicDampingFactor = 0.01;
   controls.enablePan = false;
   controls.enableZoom = false;
+  controls.enableRotate = !isMobile;
   controls.rotateSpeed = 0.8;
   controls.autoRotate = false;
 
