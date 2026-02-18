@@ -62,13 +62,13 @@ function init() {
   camera.add(dLight2);
 
   if (isMobile) {
-    camera.position.z = 300;
+    camera.position.z = 200;
     camera.position.x = 0;
-    camera.position.y = 0;
+    camera.position.y = -100;
   } else {
-    camera.position.z = 220;
-    camera.position.x = -120;
-    camera.position.y = 80;
+    camera.position.z = 200;
+    camera.position.x = -140;
+    camera.position.y = 100;
   }
 
   scene.add(camera);
