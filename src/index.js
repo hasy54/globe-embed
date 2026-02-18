@@ -60,9 +60,9 @@ function init() {
   dLight2.position.set(-200, 500, 200);
   camera.add(dLight2);
 
-  camera.position.z = 400;
-  camera.position.x = 0;
-  camera.position.y = 0;
+  camera.position.z = 220;
+  camera.position.x = -120;
+  camera.position.y = 80;
 
   scene.add(camera);
 
