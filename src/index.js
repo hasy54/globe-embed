@@ -83,15 +83,10 @@ function init() {
   dLight2.position.set(-200, 500, 200);
   camera.add(dLight2);
 
-  if (isMobile) {
-    camera.position.z = 180;
-    camera.position.x = 0;
-    camera.position.y = 120;
-  } else {
-    camera.position.z = 200;
-    camera.position.x = -140;
-    camera.position.y = -80;
-  }
+  // Initial camera position will be set by onWindowResize
+  camera.position.z = 200;
+  camera.position.x = 0;
+  camera.position.y = 0;
 
   scene.add(camera);
 
@@ -199,25 +194,32 @@ function onMouseMove(event) {
 }
 
 function onWindowResize() {
-  isMobile = window.innerWidth < 768;
-  camera.aspect = window.innerWidth / window.innerHeight;
+  var width = window.innerWidth;
+  var height = window.innerHeight;
+  var aspect = width / height;
+
+  isMobile = width < 768;
+  camera.aspect = aspect;
   camera.updateProjectionMatrix();
 
+  // Scale camera distance based on container size
+  var baseZ = Math.max(180, Math.min(280, 300 / aspect));
+
   if (isMobile) {
-    camera.position.z = 180;
+    camera.position.z = baseZ;
     camera.position.x = 0;
-    camera.position.y = 120;
+    camera.position.y = baseZ * 0.5;
     controls.enableRotate = false;
   } else {
-    camera.position.z = 200;
-    camera.position.x = -140;
-    camera.position.y = -80;
+    camera.position.z = baseZ;
+    camera.position.x = -baseZ * 0.6;
+    camera.position.y = -baseZ * 0.3;
     controls.enableRotate = true;
   }
 
-  windowHalfX = window.innerWidth / 1.5;
-  windowHalfY = window.innerHeight / 1.5;
-  renderer.setSize(window.innerWidth, window.innerHeight);
+  windowHalfX = width / 1.5;
+  windowHalfY = height / 1.5;
+  renderer.setSize(width, height);
 }
 
 function animate() {
