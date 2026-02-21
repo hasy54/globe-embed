@@ -24,11 +24,33 @@ let windowHalfX = window.innerWidth / 2;
 let windowHalfY = window.innerHeight / 2;
 var Globe;
 var isMobile = window.innerWidth < 768;
+var hasStarted = false;
 
-init();
-initGlobe();
-onWindowResize();
-animate();
+// Wait for element to be in view before starting
+function startWhenVisible() {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting && !hasStarted) {
+        hasStarted = true;
+        init();
+        initGlobe();
+        onWindowResize();
+        animate();
+        observer.disconnect();
+      }
+    });
+  }, { threshold: 0.1 });
+
+  // Observe the body or create a placeholder
+  observer.observe(document.body);
+}
+
+// Start when DOM is ready
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', startWhenVisible);
+} else {
+  startWhenVisible();
+}
 
 // SECTION Initializing core ThreeJS elements
 function init() {
