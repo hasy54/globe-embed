@@ -42,7 +42,7 @@ function init() {
   // Initialize scene, light
   scene = new Scene();
   scene.add(new AmbientLight(0x888888, 0.4));
-  scene.background = new Color(0x000000);
+  scene.background = new Color(0x2979a5);
 
   // Initialize camera, light
   camera = new PerspectiveCamera();
@@ -118,15 +118,15 @@ function initGlobe() {
           e.properties.ISO_A3
         )
       ) {
-        return "rgba(200,200,200, 1)";
-      } else return "rgba(150,150,150, 0.7)";
+        return "rgba(255,255,255, 1)";
+      } else return "rgba(220,220,220, 0.8)";
     });
 
   // NOTE Arc animations are followed after the globe enters the scene
   setTimeout(() => {
     Globe.arcsData(travelHistory.flights)
       .arcColor((e) => {
-        return e.status ? "#cccccc" : "#888888";
+        return e.status ? "#ffffff" : "#dddddd";
       })
       .arcAltitude((e) => {
         return e.arcAlt;
@@ -136,11 +136,11 @@ function initGlobe() {
       })
       .arcDashLength(0.9)
       .arcDashGap(4)
-      .arcDashAnimateTime(1000)
-      .arcsTransitionDuration(1000)
+      .arcDashAnimateTime(4000)
+      .arcsTransitionDuration(3000)
       .arcDashInitialGap((e) => e.order * 1)
       .labelsData(airportHistory.airports)
-      .labelColor(() => "#aaaaaa")
+      .labelColor(() => "#ffffff")
       .labelDotOrientation((e) => {
         return e.text === "ALA" ? "top" : "right";
       })
@@ -150,7 +150,7 @@ function initGlobe() {
       .labelResolution(6)
       .labelAltitude(0.01)
       .pointsData(airportHistory.airports)
-      .pointColor(() => "#cccccc")
+      .pointColor(() => "#ffffff")
       .pointsMerge(true)
       .pointAltitude(0.07)
       .pointRadius(0.05);
@@ -159,8 +159,8 @@ function initGlobe() {
   Globe.rotateY(-Math.PI * (5 / 9));
   Globe.rotateZ(-Math.PI / 6);
   const globeMaterial = Globe.globeMaterial();
-  globeMaterial.color = new Color(0x1a1a1a);
-  globeMaterial.emissive = new Color(0x080808);
+  globeMaterial.color = new Color(0x1a5276);
+  globeMaterial.emissive = new Color(0x154360);
   globeMaterial.emissiveIntensity = 0.1;
   globeMaterial.shininess = 0.7;
 
@@ -177,8 +177,22 @@ function onMouseMove(event) {
 }
 
 function onWindowResize() {
+  isMobile = window.innerWidth < 768;
   camera.aspect = window.innerWidth / window.innerHeight;
   camera.updateProjectionMatrix();
+
+  if (isMobile) {
+    camera.position.z = 200;
+    camera.position.x = 0;
+    camera.position.y = -100;
+    controls.enableRotate = false;
+  } else {
+    camera.position.z = 200;
+    camera.position.x = -140;
+    camera.position.y = 100;
+    controls.enableRotate = true;
+  }
+
   windowHalfX = window.innerWidth / 1.5;
   windowHalfY = window.innerHeight / 1.5;
   renderer.setSize(window.innerWidth, window.innerHeight);
