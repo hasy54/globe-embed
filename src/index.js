@@ -84,9 +84,9 @@ function init() {
   camera.add(dLight2);
 
   if (isMobile) {
-    camera.position.z = 200;
+    camera.position.z = 180;
     camera.position.x = 0;
-    camera.position.y = -100;
+    camera.position.y = 120;
   } else {
     camera.position.z = 200;
     camera.position.x = -140;
@@ -204,9 +204,9 @@ function onWindowResize() {
   camera.updateProjectionMatrix();
 
   if (isMobile) {
-    camera.position.z = 200;
+    camera.position.z = 180;
     camera.position.x = 0;
-    camera.position.y = -100;
+    camera.position.y = 120;
     controls.enableRotate = false;
   } else {
     camera.position.z = 200;
