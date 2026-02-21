@@ -90,7 +90,7 @@ function init() {
   } else {
     camera.position.z = 200;
     camera.position.x = -140;
-    camera.position.y = 100;
+    camera.position.y = -80;
   }
 
   scene.add(camera);
@@ -211,7 +211,7 @@ function onWindowResize() {
   } else {
     camera.position.z = 200;
     camera.position.x = -140;
-    camera.position.y = 100;
+    camera.position.y = -80;
     controls.enableRotate = true;
   }
 
