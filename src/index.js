@@ -109,7 +109,8 @@ function init() {
   controls.enableZoom = false;
   controls.enableRotate = !isMobile;
   controls.rotateSpeed = 0.8;
-  controls.autoRotate = false;
+  controls.autoRotate = true;
+  controls.autoRotateSpeed = 1.0;
 
   controls.minPolarAngle = Math.PI / 3.5;
   controls.maxPolarAngle = Math.PI - Math.PI / 3;
@@ -156,16 +157,6 @@ function initGlobe() {
       .arcDashAnimateTime(4000)
       .arcsTransitionDuration(3000)
       .arcDashInitialGap((e) => e.order * 1)
-      .labelsData(airportHistory.airports)
-      .labelColor(() => "#ffffff")
-      .labelDotOrientation((e) => {
-        return e.text === "ALA" ? "top" : "right";
-      })
-      .labelDotRadius(0.3)
-      .labelSize((e) => e.size)
-      .labelText("city")
-      .labelResolution(6)
-      .labelAltitude(0.01)
       .pointsData(airportHistory.airports)
       .pointColor(() => "#ffffff")
       .pointsMerge(true)
