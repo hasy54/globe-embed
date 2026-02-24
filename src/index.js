@@ -110,7 +110,7 @@ function init() {
   controls.enableRotate = !isMobile;
   controls.rotateSpeed = 0.8;
   controls.autoRotate = true;
-  controls.autoRotateSpeed = 1.0;
+  controls.autoRotateSpeed = -2.0;
 
   controls.minPolarAngle = Math.PI / 3.5;
   controls.maxPolarAngle = Math.PI - Math.PI / 3;
